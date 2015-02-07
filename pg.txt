@@ -1,0 +1,7 @@
+Assignment	1/12/15	Store.java	5.00	5.00 / 5.0 = 100.00%	 	
+Assignment	1/20/15	Recursively.java	10.00	10.00 / 10.0 = 100.00%	 	
+Assignment	1/27/15	PixLab 3	5.00	5.00 / 5.0 = 100.00%	 	
+Assignment	1/29/15	PixLab 4	15.00	15.00 / 15.0 = 100.00%	 	
+Test	1/30/15	Test 5	92.00	92.00 / 100.0 = 92.00%	 	
+Assignment	2/3/15	PixLab pixelate	10.00	10.00 / 10.0 = 100.00%	 	
+Assignment	2/5/15	PixLab 5	20.00	20.00 / 20.0 = 100.00%	 	
