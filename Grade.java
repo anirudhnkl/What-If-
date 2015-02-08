@@ -3,19 +3,12 @@ import java.io.*;
 import java.util.*;
 import java.net.*;
 import java.math.*;
-/*import org.jsoup.Jsoup;
-import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;*/
 
 public class Grade
 {
 	private String text;
 	private ArrayList<String> gradeList;
-	private ArrayList<Assignment> assignment;
-	private ArrayList<double> weightage;
+	private ArrayList<Type> types = new ArrayList<Type>();
 	private Scanner keyboard = new Scanner(System.in);
 
 	public static void main(String[] args)
@@ -70,47 +63,66 @@ public class Grade
    		{
    			gradeList.add(input.nextLine());
    		}
-   		/*
-   		URL url = new URL("https://montavista.schoolloop.com/progress_report/report?d=x&id=1376458845011&period_id=1407475277927&mark_id=current&template=print");
-        Document doc = Jsoup.parse(url, 3*1000);
-
-        String text = doc.body().text();
-        text = text.substring(text.indexOf("Submission: ") + 12, text.lastIndexOf("   Zeros No"));
-        int i = 0;
-        while(text.length() != 0)
-        {
-        	gradeList.add(text.substring(0,text.indexOf("%") + 1));
-        	text = text.substring(text.indexOf("%") + 1);
-        }*/
-        //System.out.println(gradeList);
    		input.close();
 	}
 
 	public void separate()
-
 	{
 		String [] list = new String[10];
 		String str = "";
-		assignment = new ArrayList<Assignment>(gradeList.size());
-		for(int i = 0; i < gradeList.size(); i++)
+		boolean inTypes = false;
+		ArrayList<String> result = new ArrayList<>();
+		HashSet<String> set = new HashSet<>();
+		ArrayList<String> typeNames = new ArrayList<String>(gradeList.size());
+
+		for(int y = 0; y < gradeList.size(); y++)
 		{
-			assignment.add(new Assignment());
+			str = gradeList.get(y);
+			list = str.split("\\t");
+			typeNames.add(list[0]);
 		}
-		System.out.println(assignment);
+
+
+		for (String item : typeNames) 
+		{
+		    if (!set.contains(item)) 
+		    {
+				result.add(item);
+				set.add(item);
+		    }
+		}
+
+		for(int w = 0; w < result.size(); w++)
+			types.add(new Type(result.get(w).getName(), findWeightage(result.get(w).getName())));
+
 		for(int i = 0; i < gradeList.size(); i++)
 		{
 			str = gradeList.get(i);
 			list = str.split("\\t");
-			assignment.get(i).setType(list[0]);
-			assignment.get(i).setDate(list[1]);
-			assignment.get(i).setDescription(list[2]);
-			assignment.get(i).setScore(Double.parseDouble(list[3]));
+			double total;
 			if(list[4].indexOf('=') != -1)
-				assignment.get(i).setTotal(Double.parseDouble(list[4].substring(list[4].indexOf('/') + 2,list[4].indexOf('=') - 1)));
+			{
+				total = Double.parseDouble(list[4].substring(list[4].indexOf('/') + 2,list[4].indexOf('=') - 1));
+			}
 			else
-				assignment.get(i).setTotal(Double.parseDouble(list[5].substring(0,list[5].indexOf('=') - 1)));
-			assignment.get(i).setPercent(round(100*(assignment.get(i).getScore()/assignment.get(i).getTotal()),2));
+			{
+				total = Double.parseDouble(list[5].substring(0,list[5].indexOf('=') - 1));
+			}
+			findType(list[0]).addAssignment(list[1], Double.parseDouble(list[3]), total, list[2]);
 		}
+	}
+
+	public Type findType(String s)
+	{
+	    for(Type t : types)
+	    {
+	    	System.out.println(s + "  " + t.getName());
+	        if(t.getName().equals(s))
+	        {
+	            return t;
+	        }
+	    }
+	    return null;
 	}
 
 	public static double round(double value, int places) 
@@ -128,20 +140,8 @@ public class Grade
 		String choice = keyboard.next();
 	}
 
-	public double calculateOverall()
+	public double findWeightage(String type)
 	{
-		for (int i = 0; i < assignment.size(); i++) 
-		{
-			if(assignment.get(i))
-		}
-	}
-
-	public void findWeightage()
-	{
-		String type = "";
-		for(int i = 0; i < assignment.size(); i++)
-		{
-			weightage
-		}
+		return Double.parseDouble(askUser("What is the weightage for " + type));
 	}
 }
