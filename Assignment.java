@@ -2,7 +2,7 @@ public class Assignment
 {
 	String date;
 	String name;
-	String type;
+	Type type;
 	String description;
 	double score;
 	double total;
@@ -25,9 +25,9 @@ public class Assignment
 	{
 		this.name = _name;
 	}
-	public void setType(String _type)
+	public void setType(String _name)
 	{
-		this.type = _type;
+		this.type.setName(_type);
 	}
 	public void setScore(double _score)
 	{
@@ -53,9 +53,9 @@ public class Assignment
 	{
 		return name;
 	}
-	public String getType()
+	public String getTypeName()
 	{
-		return type;
+		return type.getName();
 	}
 	public double getScore()
 	{
