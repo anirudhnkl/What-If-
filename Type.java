@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * @author Anirudh Balasubramaniam
+ */
+
 public class Type
 {
 	String name;
