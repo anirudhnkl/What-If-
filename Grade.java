@@ -4,6 +4,9 @@ import java.util.*;
 import java.net.*;
 import java.math.*;
 
+/**
+* @author Anirudh Balasubramaniam
+*/
 public class Grade
 {
 	private String text;
@@ -93,7 +96,7 @@ public class Grade
 		}
 
 		for(int w = 0; w < result.size(); w++)
-			types.add(new Type(result.get(w).getName(), findWeightage(result.get(w).getName())));
+			types.add(new Type(result.get(w), findWeightage(result.get(w))));
 
 		for(int i = 0; i < gradeList.size(); i++)
 		{
@@ -116,7 +119,6 @@ public class Grade
 	{
 	    for(Type t : types)
 	    {
-	    	System.out.println(s + "  " + t.getName());
 	        if(t.getName().equals(s))
 	        {
 	            return t;
@@ -136,12 +138,53 @@ public class Grade
 	public void ask()
 	{
 		System.out.println("What should be done next:");
-		System.out.println("Enter 1 - to print\nEnter 2 - to add new assignment\nEnter 3 - to find out to calculate needed grade for final\n\n");
-		String choice = keyboard.next();
+		System.out.println("Enter 1 - to print\nEnter 2 - to add new assignment to get desired grade\nEnter 3 - to find out to calculate needed grade for a certain category to get desired grade\n\n");
+		int choice = Integer.parseInt(keyboard.next());
+		switch(choice)
+		{
+			case 1: print(); break;
+			case 2:
+			case 3: runCalculation(choice); break;
+		}
 	}
 
 	public double findWeightage(String type)
 	{
-		return Double.parseDouble(askUser("What is the weightage for " + type));
+		return Double.parseDouble(askUser("What is the weightage for " + type + "?");
+	}
+
+	public void print()
+	{
+
+	}
+
+	public void runCalculation(int choice)
+	{
+		String desiredScore = askUser("What is your desired score?");
+		double neededGrade = 0.0;
+
+		if(choice == 2)
+		{
+
+		}
+
+		else()
+		{
+			neededGrade = calculateNeededGradeCategory();
+		}
+	}
+
+	public double calculateNeededGradeCategory(Type t, double desiredScore)
+	{
+		double weightage = t.getWeightage();
+		double neededGrade = (desiredScore-calculateOverall()*(1-weightage))/weightage;
+		return neededGrade;
+	}
+
+	public double calculateNeededGradeAssignment(Type t, double desiredScore, double total)
+	{
+		double typeGrade = calculateNeededGrade(t, desiredScore);//the required grade in the overall type
+		double neededScore = (typeGrade)*t.getTotal()-(t.getTotalScore()+total);
+		return neededScore;
 	}
 }

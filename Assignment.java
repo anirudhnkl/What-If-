@@ -1,3 +1,7 @@
+/**
+* @author Anirudh Balasubramaniam
+*/
+
 public class Assignment
 {
 	String date;
